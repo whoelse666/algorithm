@@ -3,35 +3,27 @@
  * @return {number}
  */
 
+// 方法一：动态规划
+var wiggleMaxLength = function(nums) {
+    const n = nums.length;
+    if (n < 2) { 
+        return n;
+    }
 
-var wiggleMaxLength = function (nums) {
-  const len = nums.length;
-  let l = 2;
-  if (len <= 1) return len;
-  if (len === 2 && nums[0] !== nums[1]) {
-    return 2;
-  } else if (len === 2 && nums[0] === nums[1]) {
-    l = 1;
-    return 1;
-  }
-  for (let i = 2; i < nums.length; i++) {
-    if (nums.length <= 3 && nums[i] === nums[i - 1] && nums[i - 1] === nums[i - 2]) {
-      nums.splice(i - 1, 1);
-      i--;
-      l--;
-      continue;
+    let up = down = 1;
+    for (let i = 1; i < n; i++) {
+        if (nums[i] > nums[i - 1]) {
+            up = down + 1;
+        } else if (nums[i] < nums[i - 1]) {
+            down = up + 1;
+        }
     }
-    if ((nums[i] - nums[i - 1] > 0 && nums[i - 1] - nums[i - 2] < 0) || (nums[i] - nums[i - 1] < 0 && nums[i - 1] - nums[i - 2] > 0)) {
-      l++;
-    } else {
-      console.log("i-1", i - 1, nums[i - 1]);
-      // arr.push(i - 1);
-      nums.splice(i - 1, 1);
-      i--;
-    }
-  }
-  return l;
+    return Math.max(up, down);
 };
+
+
+
+//贪心算法 
 var wiggleMaxLength = function (nums) {
   const len = nums.length;
   if (len <= 1) return len;
