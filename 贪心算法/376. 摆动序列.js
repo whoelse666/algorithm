@@ -4,26 +4,30 @@
  */
 
 // 方法一：动态规划
-var wiggleMaxLength = function(nums) {
-    const n = nums.length;
-    if (n < 2) { 
-        return n;
-    }
+var wiggleMaxLength = function (nums) {
+  const n = nums.length;
+  if (n < 2) {
+    return n;
+  }
 
-    let up = down = 1;
-    for (let i = 1; i < n; i++) {
-        if (nums[i] > nums[i - 1]) {
-            up = down + 1;
-        } else if (nums[i] < nums[i - 1]) {
-            down = up + 1;
-        }
+  let up = (down = 1);
+  for (let i = 1; i < n; i++) {
+    if (nums[i] > nums[i - 1]) {
+      up = down + 1;
+    } else if (nums[i] < nums[i - 1]) {
+      down = up + 1;
     }
-    return Math.max(up, down);
+  }
+  return Math.max(up, down);
 };
 
-
-
-//贪心算法 
+/* 考虑三种情况：
+情况一：上下坡中有平坡
+情况二：数组首尾两端
+情况三：单调坡中有平坡
+#
+ */
+//贪心算法
 var wiggleMaxLength = function (nums) {
   const len = nums.length;
   if (len <= 1) return len;
